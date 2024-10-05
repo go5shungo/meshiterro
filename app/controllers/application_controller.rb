@@ -5,11 +5,24 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     post_images_path
   end
-  
+
   def after_sign_out_path_for(resource)
      about_path
   end
-  
+
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
+    redirect_to user_path(list.id)
+  end
+
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :profile_image)
+  end
+
   protected
 
   def configure_permitted_parameters
